@@ -12,7 +12,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var settings: UIToolbar!
     
-    private var url = "http://tednewardsandbox.site44.com/questions.json"
+//    private var url = "http://tednewardsandbox.site44.com/questions.json"
     
     private var categories: [Categories] = []
 
@@ -28,11 +28,11 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         super.viewDidLoad()
         table.dataSource = self
         table.delegate = self
-        fetch()
+        fetch("http://tednewardsandbox.site44.com/questions.json")
     }
     
     //Get data from JSON file
-    func fetch() {
+    func fetch(_ url: String = "http://tednewardsandbox.site44.com/questions.json") {
         guard let url = URL(string: url) else {
             print("Invalid URL")
             return
@@ -50,6 +50,9 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     return
                 }
             
+//            let string = String(data: data!, encoding: .utf8)!
+//            print("Data returned is \(string)")
+            
             guard let jsonData = data else {
                 print("No data received")
                 return
@@ -60,6 +63,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 DispatchQueue.main.async {
                     self.table.reloadData()
                 }
+//                print(self.categories.first?.questions)
             } catch {
                 print("Error parsing JSON: \(error)")
             }
@@ -102,13 +106,25 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         alert.addTextField { (textField) in
             textField.placeholder = "URL"
         }
-        alert.addAction(UIAlertAction(title: "Check Now", style: .default) {
-            UIAlertAction in
-            let url = alert.textFields![0] as UITextField
-            //***Have not implemented GetData yet***
+        alert.addAction(UIAlertAction(title: "Check Now", style: .default) {UIAlertAction in
+            let url = (alert.textFields![0] as UITextField).text
+                //***Have not implemented GetData yet***
+            if (url == nil || url == "") {
+                self.fetch()
+            } else {
+                self.fetch(url!)
             }
-        )
+            self.table.reloadData()
+        })
         self.present(alert, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print("Row \(indexPath) selected")
+        let quizIndex = indexPath[1]
+        let quizViewController = self.storyboard!.instantiateViewController(withIdentifier: "quiz") as! QuizViewController
+        quizViewController.setQuizQuestions(quizQuestions: self.categories[quizIndex].questions)
+        self.present(quizViewController, animated: true, completion: nil)
     }
     
     //Space the cells evenly throughout the screen
