@@ -7,29 +7,9 @@
 
 import UIKit
 
-//class Categories: NSObject {
-//    
-//    var cellTitle : String
-//    var cellDescription : String
-//    var cellImgName : String
-//    
-//    override init() {
-//        cellTitle = ""
-//        cellDescription = ""
-//        cellImgName = ""
-//    }
-//    
-//    init(title: String, imgName: String, description: String){
-//        cellTitle = title
-//        cellDescription = description
-//        cellImgName = imgName
-//    }
-//}
-
 struct Categories: Decodable {
     let title: String
     let desc: String
-//    let imgName: String
     let questions: [Question]
 }
 

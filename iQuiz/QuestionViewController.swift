@@ -12,7 +12,6 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     @IBOutlet weak var questionLabel: UILabel!
     @IBOutlet weak var ansPicker: UIPickerView!
     var choices: [String] = []
-//    @IBOutlet weak var submitBtn: UIButton!
     
     var questionsData: [Categories] = []    
     
@@ -23,13 +22,11 @@ class QuestionViewController: UIViewController, UIPickerViewDelegate, UIPickerVi
     }
     
     func setQuestion(_ question: String) {
-//        print(question)
         questionLabel.text = question
     }
     
     func setAnswerChoices(_ answerChoices: [String]) {
         choices = answerChoices
-//        print(choices)
         ansPicker.reloadAllComponents()
         ansPicker.selectRow(0, inComponent: 0, animated: false)
         NotificationCenter.default.post(name: Notification.Name("userAnswer"), object: 1)

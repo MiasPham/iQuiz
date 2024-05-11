@@ -37,12 +37,10 @@ class QuizViewController: UIViewController {
     
     @objc func didGetNotification(_ notification: Notification) {
         userAnswer = (notification.object as! Int)
-//        print(userAnswer)
     }
     
     func setQuizQuestions(quizQuestions: [Question]) {
         questions = quizQuestions
-//        print(questions)
     }
     
     func instantiate<T>(id: String) -> T! {
@@ -50,7 +48,6 @@ class QuizViewController: UIViewController {
     }
     
     @IBAction func switchViews(_ sender: UIButton) {
-//        btn = sender
         UIView.animate(withDuration: 0.4, animations: { [self] in
             if self.questionView != nil &&
                 self.questionView.view.superview != nil {
@@ -131,15 +128,7 @@ class QuizViewController: UIViewController {
         self.view.insertSubview(to.view, at: 0)
         to.didMove(toParent: self)
     }
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }*/
+    
      @IBAction func backBtnAction(_ sender: UIButton) {
          dismiss(animated: true)
      }
