@@ -21,6 +21,14 @@ class QuizViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(_ :)))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(swipeFunc(_ :)))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
         // Do any additional setup after loading the view.
         questionView = instantiate(id: "question")
         answerView = instantiate(id: "answer")
@@ -33,6 +41,14 @@ class QuizViewController: UIViewController {
         questionView.setAnswerChoices(questions[questionIdx].answers)
         
         NotificationCenter.default.addObserver(self, selector: #selector(didGetNotification(_ :)), name: Notification.Name("userAnswer"), object: nil)
+    }
+    
+    @objc func swipeFunc(_ gesture: UISwipeGestureRecognizer) {
+        if gesture.direction == .right {
+            backBtnAction(UIButton())
+        } else if gesture.direction == .left {
+            switchViews(UIButton())
+        }
     }
     
     @objc func didGetNotification(_ notification: Notification) {
@@ -48,6 +64,7 @@ class QuizViewController: UIViewController {
     }
     
     @IBAction func switchViews(_ sender: UIButton) {
+        var moveScreenBtn = self.view.viewWithTag(2) as? UIButton
         UIView.animate(withDuration: 0.4, animations: { [self] in
             if self.questionView != nil &&
                 self.questionView.view.superview != nil {
@@ -63,7 +80,7 @@ class QuizViewController: UIViewController {
                 //                print(userAnswer)
                 answerView.showResult(isCorrect,
                                       correctResult: questions[questionIdx].answers[correctResult - 1])
-                sender.setTitle("Next", for: .normal)
+                moveScreenBtn!.setTitle("Next", for: .normal)
                 switchViewController(questionView, to: answerView)
                 
                 if isCorrect {
@@ -79,7 +96,7 @@ class QuizViewController: UIViewController {
                 ], animations: {
                     self.questionView.view.frame = self.view.frame
                 })
-                sender.setTitle("Submit", for: .normal)
+                moveScreenBtn!.setTitle("Submit", for: .normal)
                 questionIdx = 0
                 questionView.setQuestion(questions[questionIdx].text)
                 questionView.setAnswerChoices(questions[questionIdx].answers)
@@ -92,7 +109,7 @@ class QuizViewController: UIViewController {
                     ], animations: {
                         self.finalView.view.frame = self.view.frame
                     })
-                    sender.setTitle("Next", for: .normal)
+                    moveScreenBtn!.setTitle("Next", for: .normal)
                     finalView.showResultSummary(get: totalScore, outof: questions.count)
                     switchViewController(answerView, to: finalView)
                     isSummary = false
@@ -103,7 +120,7 @@ class QuizViewController: UIViewController {
                     ], animations: {
                         self.questionView.view.frame = self.view.frame
                     })
-                    sender.setTitle("Submit", for: .normal)
+                    moveScreenBtn!.setTitle("Submit", for: .normal)
                     questionIdx = (questionIdx + 1) % questions.count
                     questionView.setQuestion(questions[questionIdx].text)
                     questionView.setAnswerChoices(questions[questionIdx].answers)
