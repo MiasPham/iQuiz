@@ -77,6 +77,7 @@
                                             <action selector="settingsTapped:" destination="BYZ-38-t0r" id="Y59-0C-YH9"/>
                                         </connections>
                                     </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="yAF-iE-6jP"/>
                                 </items>
                             </toolbar>
                         </subviews>
@@ -165,10 +166,25 @@
                                     <action selector="switchViews:" destination="Ug9-yu-mOO" eventType="touchUpInside" id="fG5-M0-TAb"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rg1-Kh-gUm">
+                                <rect key="frame" x="327" y="412" width="0.0" height="0.0"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Try swipping!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PuG-pq-naW">
+                                <rect key="frame" x="303" y="810" width="102" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="7cj-65-4pk"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="PuG-pq-naW" secondAttribute="bottom" constant="67" id="8Pg-Y8-HFp"/>
+                            <constraint firstItem="7cj-65-4pk" firstAttribute="trailing" secondItem="PuG-pq-naW" secondAttribute="trailing" constant="25" id="ESh-zJ-E6n"/>
                             <constraint firstItem="7cj-65-4pk" firstAttribute="bottom" secondItem="jnL-e6-Kd3" secondAttribute="bottom" constant="20" id="NfS-Z0-1zI"/>
                             <constraint firstItem="7cj-65-4pk" firstAttribute="trailing" secondItem="jnL-e6-Kd3" secondAttribute="trailing" constant="25" id="WqC-kV-bct"/>
                             <constraint firstItem="cYc-MJ-kRo" firstAttribute="leading" secondItem="7cj-65-4pk" secondAttribute="leading" constant="25" id="k7B-4A-feE"/>
