@@ -12,24 +12,22 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var settings: UIToolbar!
     
-//    private var url = "http://tednewardsandbox.site44.com/questions.json"
+    private var url : String!
     
     private var categories: [Categories] = []
-
-//    private var selectedCategoryIndex: Int?
-    
-//    let data: [Categories] = [
-//        Categories(title: "Mathematics", imgName: "math_logo", description: "Test your mathematical skills with our engaging trivia quiz, packed with fun and challenging questions."),
-//        Categories(title: "Marvel Super Heroes", imgName: "marvel_logo", description: "Test your Marvel skills with our engaging trivia quiz, packed with fun and challenging questions."),
-//        Categories(title: "Science", imgName: "science_logo", description: "Test your science skills with our engaging trivia quiz, packed with fun and challenging questions."),
-//    ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         table.dataSource = self
         table.delegate = self
-        fetch("http://tednewardsandbox.site44.com/questions.json")
+        UserDefaults.standard.register(defaults: [String: Any]())
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        url = UserDefaults.standard.string(forKey: "url")
+        fetch(url!)
+    }
+                                       
     
     //Get data from JSON file
     func fetch(_ url: String = "http://tednewardsandbox.site44.com/questions.json") {
@@ -50,9 +48,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                     return
                 }
             
-//            let string = String(data: data!, encoding: .utf8)!
-//            print("Data returned is \(string)")
-            
             guard let jsonData = data else {
                 print("No data received")
                 return
@@ -63,7 +58,6 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
                 DispatchQueue.main.async {
                     self.table.reloadData()
                 }
-//                print(self.categories.first?.questions)
             } catch {
                 print("Error parsing JSON: \(error)")
             }
@@ -102,17 +96,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     //Settings alert
     @IBAction func settingsTapped(_ sender: Any) {
         let alert = UIAlertController(title: "Update", message: "Input URL below", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         alert.addTextField { (textField) in
             textField.placeholder = "URL"
         }
         alert.addAction(UIAlertAction(title: "Check Now", style: .default) {UIAlertAction in
             let url = (alert.textFields![0] as UITextField).text
-                //***Have not implemented GetData yet***
             if (url == nil || url == "") {
                 self.fetch()
             } else {
                 self.fetch(url!)
+                UserDefaults.standard.setValue(url!, forKey: "url")
+                UserDefaults.standard.synchronize()
             }
             self.table.reloadData()
         })
